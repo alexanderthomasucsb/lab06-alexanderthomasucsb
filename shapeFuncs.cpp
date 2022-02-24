@@ -2,6 +2,7 @@
 #include <string>
 #include <sstream>  // for ostringstream
 #include <iomanip> // for setprecision
+#include <cmath>
 
 using namespace std;
 
@@ -13,7 +14,11 @@ using namespace std;
 // Compute distance between two points
 
 double distanceBetween(Point p, Point q) {
-  return 99999.9; // @@@ STUB
+  
+	double distance = 0;
+	distance = sqrt(pow(p.x-q.x, 2.0) +pow(p.y-q.y, 2.0));
+	return distance;
+
   // HINTS: The distance formula is something you hopefully remember
   //   from H.S. algebra, but if not, Wikipedia is your friend.
   //   The sqrt function is available when you use #include <cmath>, 
@@ -34,7 +39,11 @@ double distanceBetween(Point p, Point q) {
 
 
 void initPoint(struct Point *p, double xVal, double yVal) {
-  //return; //@@@ for a void function, the stub is just a bare return that does nothing
+
+  
+	p->x = xVal;
+	p->y = yVal;
+	return;
 }
 
 
@@ -47,9 +56,11 @@ string pointToString(Point p, int precision) {
 
 string boxToString(Box b, int precision) {
   
-  // SAMPLE FORMAT: "ul=(3.4,-5),w=5,h=7"
   
-  return "stub!"; // TODO: Delete this line and comment and replace with appropriate code
+	ostringstream oss;
+  	oss << setprecision(precision);
+	oss << "ul=(" << b.ul.x << "," << b.ul.y << "),w=" << b.width << ",h=" << b.height;
+  	return oss.str(); // TODO: Delete this line and comment and replace with appropriate code
 }
  
 
@@ -67,7 +78,13 @@ bool pointsApproxEqual(Point p1,
 
 bool boxesApproxEqual(Box b1, Box b2, double tolerance) {
 
-  // Two boxes are approximately equal if their upper left corners are approximately 
+  
+	bool equal = true;
+	if(abs(b1.ul.x - b2.ul.x) > tolerance || abs(b1.ul.y - b2.ul.y) > tolerance ){equal = false;}
+	if(abs(b1.width - b2.width) > tolerance){equal = false;}
+	if(abs(b1.height - b2.height) > tolerance){equal = false;}
+	return equal;
+	// Two boxes are approximately equal if their upper left corners are approximately 
   // equal, and if their corresponding widths and height are approx equal.
 
   // Remember: to test whether double values a and b are approximately equal, you need:
@@ -96,11 +113,19 @@ bool boxesApproxEqual(Box b1, Box b2, double tolerance) {
 
 void initBox(struct Box *b, double ulx, double uly, double w, double h)
 {
-  return; // @@@ For a void function a "naked return" is a "do nothing" stub
+ 
+
+ 	b->ul.x = ulx;
+	b->ul.y = uly;
+	b->width = w;
+	b->height = h;
+	return; // @@@ For a void function a "naked return" is a "do nothing" stub
 }
 
 
 double areaOfBox(Box b) {
-  return -42.0;  /* stub---make sure all tests fail initially */
+ 
+
+       	return b.width * b.height;  /* stub---make sure all tests fail initially */
   // you can use b.width to access width, and b.height to access height
 }
